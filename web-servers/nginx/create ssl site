@@ -1,0 +1,39 @@
+apt install nginx
+
+/var/www/html/html  is default site and content is here
+
+/etc/nginx/nginx.cong   here is nginx parameters in general
+
+
+/etc/nginx/site-enabled   here is the content that nginx read
+/etc/nginx/site-available here is the content of site we want to create but nginx doent read and we should link the site path to site-enabled
+
+
+ln -s path of site in site-available  path of site in site-enabledd
+
+
+
+
+-------------------------------------------------
+for ssl deploy on site : 
+
+
+openssl genpkey -algorithm RSA -out private.key
+
+openssl req -new -key private.key -out csr.csr
+
+
+openssl x509 -req -days 365 -in csr.csr -signkey private.key -out certificate.cert
+
+
+cp certificate.cert  /etc/ssl/certs/
+cp private.key /etc/ssl/private/
+vi /etc/nginx/sites-enabled/default
+server {
+        listen 443 ssl default_server;
+        listen [::]:443 default_server;
+ssl_certificate /etc/ssl/certs/certificate.cert;
+ssl_certificate_key /etc/ssl/private/private.key;
+
+
+nginx -s reload
