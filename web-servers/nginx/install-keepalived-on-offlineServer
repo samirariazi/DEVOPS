@@ -1,0 +1,60 @@
+Step 1: On the online Ubuntu 22.04.1 server
+
+Create a folder for the packages:
+
+mkdir ~/keepalived-debs
+cd ~/keepalived-debs
+
+
+Update package lists:
+
+sudo apt update
+
+
+Download Keepalived and all dependencies:
+
+sudo apt install --download-only --reinstall keepalived
+
+
+The .deb files will be stored in /var/cache/apt/archives/.
+
+Copy all the .deb files to your folder:
+
+cp /var/cache/apt/archives/*.deb ~/keepalived-debs/
+
+
+⚠️ Make sure to get all dependencies from /var/cache/apt/archives/ used by Keepalived.
+
+Step 2: Transfer the .deb files to the offline server
+
+Using USB, SCP, or any method:
+
+scp ~/keepalived-debs/*.deb user@offline-server:/tmp/
+
+
+Or if you physically transfer via USB, copy them to /tmp or any folder on the offline server.
+
+Step 3: Install on the offline server
+
+Go to the folder where you copied the .deb files:
+
+cd /tmp
+
+
+Install all .deb files:
+
+sudo dpkg -i *.deb
+
+
+Fix any missing dependencies (if any):
+
+sudo apt-get -f install
+
+Step 4: Start and enable Keepalived
+sudo systemctl start keepalived
+sudo systemctl enable keepalived
+sudo systemctl status keepalived
+
+
+✅ This method works completely offline and doesn’t require apt-offline.
+It’s faster if you already have access to an online Ubuntu 22.04.1 server.
