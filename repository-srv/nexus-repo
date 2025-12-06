@@ -1,0 +1,37 @@
+docker run -itd --name nexus -p 8081:8081 -p 5000:5000  -p 443:443  sonatype/nexus3
+
+
+
+browse nexux on 192.168.10.250:8081 and in repository create a repo give it a name and select docker-host with http port:5000
+
+
+
+vi /etc/docker/daemon.json
+
+
+add this 
+
+
+{
+  "insecure-registries": ["192.168.10.251:5000"]
+}
+save the file
+
+
+
+
+docker login 192.168.10.250:5000
+user:admin
+passwoed:123
+
+before this admin pass is in container name docker exec to it and in/nexus-document.admin
+
+
+
+ docker tag  nginx:latest  192.168.10.250:5000/nginx:latest
+
+
+docker push 192.168.10.250:5000/nginx:latest
+
+
+down  ..
