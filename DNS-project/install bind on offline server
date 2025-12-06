@@ -1,0 +1,39 @@
+Method 1 — Install BIND9 on Offline Ubuntu/Debian Server (with Another Online Machine)
+Step 1: On an online machine
+
+Download all required BIND9 packages with dependencies:
+
+sudo apt-get update
+sudo apt-get install --download-only bind9 bind9utils bind9-dnsutils bind9-host bind9-doc dnsutils
+
+
+This will download .deb files into:
+
+/var/cache/apt/archives/
+
+
+Copy them:
+
+mkdir bind9-offline
+cp /var/cache/apt/archives/*.deb bind9-offline/
+
+Step 2: Transfer to the offline server
+
+Use USB / SCP / ISO — whatever works.
+
+scp -r bind9-offline/ root@offline-server:/root/
+
+Step 3: Install locally on the offline server
+
+On the offline machine:
+
+cd /root/bind9-offline
+sudo dpkg -i *.deb
+
+
+If dependency errors appear:
+
+sudo apt --fix-broken install --yes
+
+
+(Don’t worry — it will use local .deb files, not the internet.)
