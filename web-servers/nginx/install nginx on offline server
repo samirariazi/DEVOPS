@@ -1,0 +1,23 @@
+on a ubuntu 22.04 online server that has qccess to internet :
+
+mkdir ~/nginx-offline
+cd ~/nginx-offline
+sudo apt update
+sudo apt-get --yes --download-only install nginx
+ cp /var/cache/apt/archives/*.deb ~/nginx-offline/
+copy to the offline server :
+
+
+ scp -r /home/samira/nginx-offline/* samira@172.22.3.247:/home/samira/nginx-offline
+
+
+
+-----------------------
+on ubuntu 22.04 offline server : 
+
+
+mkdir /home/samira/nginx-offline
+chown samira /home/samira/nginx-offline/
+sudo dpkg -i *.deb
+
+sudo apt install ./nginx_*.deb
