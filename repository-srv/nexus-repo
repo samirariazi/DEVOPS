@@ -34,4 +34,38 @@ before this admin pass is in container name docker exec to it and in/nexus-docum
 docker push 192.168.10.250:5000/nginx:latest
 
 
-down  ..
+---------------------
+download nexus image
+docker run -itd --name nexus -p 8081:8081 -p 8443:8443 -p 5000:5000  -p 443:443 sonatype/nexus3
+
+
+
+
+http://192.168.10.250:8081/
+
+user admin
+password : login to cont on /admin  the password is shown
+
+
+
+
+change pass
+
+create repo with type apt-proxy   focal  address remote : http://archive.ubuntu.com/ubuntu
+
+
+
+in client : 
+
+
+
+ vi /etc/apt/sources.list.d/ubuntu.sources
+add : 
+
+
+
+deb [trusted=yes] http://192.168.10.250:8081/repository/ubuntu-proxy focal main restricted universe multiverse
+
+
+192.168.10.250 is the nexsus server ip 
+
